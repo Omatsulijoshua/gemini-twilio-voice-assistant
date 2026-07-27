@@ -1,0 +1,12 @@
+{
+  "name": "twilio-cr-gemini-python",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt",
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Twilio Gemini Server",
+      "visibility": "public"
+    }
+  }
+}
