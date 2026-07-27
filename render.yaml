@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: voxora-voice-api
+    name: voxora-gemini-voice-api
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
