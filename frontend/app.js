@@ -1,4 +1,5 @@
-const configuredApi = window.VOXORA_API_URL || "";
+const configuredApi =
+  window.VOXORA_API_URL || "https://voxora-gemini-voice-api.onrender.com";
 const serviceLabel = document.querySelector("#service-label");
 
 if (configuredApi && serviceLabel) {
