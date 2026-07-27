@@ -4,6 +4,7 @@ import uvicorn
 from google import genai
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -11,9 +12,9 @@ load_dotenv()
 
 # --- Configuration ---
 PORT = int(os.getenv("PORT", "8080"))
-DOMAIN = os.getenv("NGROK_URL") 
+DOMAIN = os.getenv("NGROK_URL") or os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if not DOMAIN:
-    raise ValueError("NGROK_URL environment variable not set.")
+    DOMAIN = f"localhost:{PORT}"
 WS_URL = f"wss://{DOMAIN}/ws"
 
 # Updated greeting to reflect the new model
@@ -43,6 +44,28 @@ sessions = {}
 
 # Create FastAPI app
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+async def root():
+    """Small public status response for browsers and hosting checks."""
+    return {
+        "service": "Voxora Voice API",
+        "status": "online",
+        "model": "gemini-2.5-flash",
+    }
+
+
+@app.get("/health")
+async def health():
+    """Render health-check endpoint."""
+    return {"status": "healthy"}
 
 def gemini_response(chat_session, user_prompt):
     """Get a response from the Gemini API."""

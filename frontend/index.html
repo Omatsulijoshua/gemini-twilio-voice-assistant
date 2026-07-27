@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Voxora is an intelligent voice assistant that answers every call with natural, helpful conversation." />
+    <meta property="og:title" content="Voxora — Every call, answered intelligently." />
+    <meta property="og:description" content="A natural AI voice experience powered by Twilio and Google Gemini." />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#08090d" />
+    <title>Voxora — AI Voice Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="nav shell">
+      <a class="brand" href="#" aria-label="Voxora home">
+        <span class="brand-mark"><i></i><i></i><i></i></span>
+        <span>Voxora</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#experience">Experience</a>
+        <a href="#how">How it works</a>
+        <a href="#technology">Technology</a>
+      </nav>
+      <a class="nav-cta" href="#try">Try Voxora <span>↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero shell">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Intelligent voice, always on</div>
+          <h1>Every call,<br /><em>answered intelligently.</em></h1>
+          <p>Voxora listens, understands, and responds in real time—giving every caller a natural, helpful conversation whenever they reach you.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#try"><span>Experience a call</span><b>↗</b></a>
+            <a class="text-link" href="#how">See how it works <span>↓</span></a>
+          </div>
+          <div class="trust-row">
+            <span>Powered by</span>
+            <strong><i class="twilio-dot"></i> Twilio</strong>
+            <strong><i class="gemini-star">✦</i> Google Gemini</strong>
+          </div>
+        </div>
+
+        <div class="voice-stage" aria-label="Animated Voxora call interface">
+          <div class="ambient ambient-one"></div>
+          <div class="ambient ambient-two"></div>
+          <div class="call-card">
+            <div class="call-top">
+              <div>
+                <span class="live-dot"></span>
+                <span>Live conversation</span>
+              </div>
+              <span class="timer">00:42</span>
+            </div>
+            <div class="orb-wrap">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="voice-orb">
+                <div class="wave" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+              </div>
+            </div>
+            <div class="speaking"><span></span> Voxora is speaking</div>
+            <p class="quote">“Of course. I can help you with that right away.”</p>
+            <div class="call-controls">
+              <button type="button" aria-label="Mute call">⌁</button>
+              <button class="end-call" type="button" aria-label="End call">⌕</button>
+              <button type="button" aria-label="More call options">•••</button>
+            </div>
+          </div>
+          <div class="float-note note-one"><span>⚡</span><div><b>Under a second</b><small>Response latency</small></div></div>
+          <div class="float-note note-two"><span>✦</span><div><b>Natural responses</b><small>Powered by Gemini</small></div></div>
+        </div>
+      </section>
+
+      <section class="marquee" aria-label="Voxora benefits">
+        <div>
+          <span>Natural conversation</span><b>✦</b><span>Available around the clock</span><b>✦</b>
+          <span>Context-aware</span><b>✦</b><span>Instant responses</span><b>✦</b>
+          <span>Natural conversation</span><b>✦</b><span>Available around the clock</span><b>✦</b>
+        </div>
+      </section>
+
+      <section class="experience shell section" id="experience">
+        <div class="section-heading">
+          <div><span class="kicker">Built for real conversations</span><h2>It doesn’t just answer.<br />It <em>understands.</em></h2></div>
+          <p>Every detail is designed to make automated calls feel less automated—from thoughtful pauses to context that carries through the conversation.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature feature-large">
+            <span class="feature-number">01</span>
+            <div class="mini-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>Human-like conversation</h3>
+            <p>Natural pacing, concise answers, and a voice experience that keeps people engaged.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-number">02</span>
+            <div class="context-rings"><i></i><i></i><i></i><b>Context</b></div>
+            <h3>Remembers the context</h3>
+            <p>Voxora follows the thread, so callers never have to repeat themselves.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-number">03</span>
+            <div class="pulse-meter"><b>0.8s</b><span>average response</span><i></i></div>
+            <h3>Responds in real time</h3>
+            <p>Low-latency intelligence keeps every exchange smooth and uninterrupted.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="how section" id="how">
+        <div class="shell">
+          <span class="kicker">From voice to intelligence</span>
+          <h2>One call. Three seamless steps.</h2>
+          <div class="steps">
+            <article><span>01</span><div class="step-icon">⌁</div><h3>You speak</h3><p>Twilio captures and transcribes the caller’s voice in real time.</p></article>
+            <article><span>02</span><div class="step-icon violet">✦</div><h3>Gemini understands</h3><p>The model interprets intent, context, and the best helpful response.</p></article>
+            <article><span>03</span><div class="step-icon cyan">◖</div><h3>Voxora responds</h3><p>A clear, natural voice delivers the answer and keeps the call moving.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="try section shell" id="try">
+        <div class="try-panel">
+          <div>
+            <span class="kicker">Ready when you are</span>
+            <h2>Give every caller<br />your best answer.</h2>
+            <p>Connect a Twilio number and make your first intelligent call in minutes.</p>
+          </div>
+          <div class="try-actions">
+            <a class="button primary" href="https://github.com/Omatsulijoshua/gemini-twilio-voice-assistant" target="_blank" rel="noreferrer"><span>View the project</span><b>↗</b></a>
+            <div class="service-status"><i></i><span><b>Voice service</b><small id="service-label">Ready to connect</small></span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <a class="brand" href="#"><span class="brand-mark"><i></i><i></i><i></i></span><span>Voxora</span></a>
+      <p>AI voice conversations, made human.</p>
+      <span>© 2026 Voxora</span>
+    </footer>
+  </body>
+</html>

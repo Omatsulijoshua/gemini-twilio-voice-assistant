@@ -1,5 +1,8 @@
 # AI Voice Assistant with Twilio and Google Gemini (Python)
 
+> The project now includes the **Voxora** frontend in `frontend/`, ready for
+> Vercel, and a Render Blueprint in `render.yaml` for the voice API.
+
 This project creates a AI voice assistant that uses [Twilio Voice](https://www.twilio.com/en-us/voice) and [ConversationRelay](https://www.twilio.com/en-us/products/conversational-ai/conversationrelay), and the [Google Gemini API](https://ai.google.dev/) to engage in two-way conversations over a phone call.
 
 ## Overview
@@ -56,6 +59,20 @@ This application allows users to call a Twilio number and interact with an AI as
 
 4. Configure your Twilio phone number's voice webhook. In the Twilio console, navigate to your number's settings and under "A CALL COMES IN", set the webhook to your ngrok URL with the `/twiml` endpoint (e.g., https://your-ngrok-forwarding-url.ngrok-free.app/twiml).
 5. Call your Twilio number and start talking to your new Gemini-powered voice assistant!
+
+## Deployment
+
+### Render (voice API)
+
+1. In Render, create a new Blueprint and select this repository.
+2. Set the required `GOOGLE_API_KEY` secret when prompted.
+3. Render automatically supplies the public hostname used by the Twilio WebSocket.
+4. Point your Twilio voice webhook to `https://YOUR-SERVICE.onrender.com/twiml`.
+
+### Vercel (frontend)
+
+Import this repository into Vercel and set the **Root Directory** to `frontend`.
+The site has no build step and deploys as a static site.
 
 ## How It Works
 
