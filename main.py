@@ -32,11 +32,9 @@ Please adhere to the following rules:
 # --- Gemini API Initialization ---
 # Get your Google API key from https://aistudio.google.com/app/apikey
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-if not GOOGLE_API_KEY:
-    raise ValueError("GOOGLE_API_KEY environment variable not set.")
 
 # Initialize the Gemini client with the new SDK
-client = genai.Client(api_key=GOOGLE_API_KEY)
+client = genai.Client(api_key=GOOGLE_API_KEY) if GOOGLE_API_KEY else None
 
 # Store active chat sessions
 # We will now store Gemini's chat session objects
@@ -58,6 +56,7 @@ async def root():
     return {
         "service": "Voxora Voice API",
         "status": "online",
+        "gemini_configured": client is not None,
         "model": "gemini-2.5-flash",
     }
 
@@ -101,9 +100,13 @@ async def websocket_endpoint(websocket: WebSocket):
                 call_sid = message["callSid"]
                 print(f"Setup for call: {call_sid}")
                 # Start a new chat session for this call using the new SDK
-                sessions[call_sid] = client.chats.create(
-                    model="gemini-2.5-flash",
-                    config={"system_instruction": SYSTEM_PROMPT}
+                sessions[call_sid] = (
+                    client.chats.create(
+                        model="gemini-2.5-flash",
+                        config={"system_instruction": SYSTEM_PROMPT}
+                    )
+                    if client
+                    else None
                 )
                 
             elif message["type"] == "prompt":
@@ -115,7 +118,13 @@ async def websocket_endpoint(websocket: WebSocket):
                 print(f"Processing prompt: {user_prompt}")
                 
                 chat_session = sessions[call_sid]
-                response_text = gemini_response(chat_session, user_prompt)
+                if chat_session is None:
+                    response_text = (
+                        "The voice assistant is online but still needs its "
+                        "Google Gemini API key configured."
+                    )
+                else:
+                    response_text = gemini_response(chat_session, user_prompt)
                 
                 # The chat_session object automatically maintains history.
                 
