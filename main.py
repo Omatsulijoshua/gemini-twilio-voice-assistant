@@ -2,10 +2,12 @@ import os
 import json
 import uvicorn
 from google import genai
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from dotenv import load_dotenv
+from twilio.rest import Client as TwilioClient
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,6 +18,7 @@ DOMAIN = os.getenv("NGROK_URL") or os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if not DOMAIN:
     DOMAIN = f"localhost:{PORT}"
 WS_URL = f"wss://{DOMAIN}/ws"
+BASE_URL = os.getenv("PUBLIC_BASE_URL") or os.getenv("RENDER_EXTERNAL_URL") or f"https://{DOMAIN}"
 
 # Updated greeting to reflect the new model
 WELCOME_GREETING = "Hi! I am a voice assistant powered by Twilio and Google Gemini. Ask me anything!"
@@ -35,6 +38,14 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Initialize the Gemini client with the new SDK
 client = genai.Client(api_key=GOOGLE_API_KEY) if GOOGLE_API_KEY else None
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
+twilio_client = (
+    TwilioClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    if TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
+    else None
+)
 
 # Store active chat sessions
 # We will now store Gemini's chat session objects
@@ -45,7 +56,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -65,6 +76,30 @@ async def root():
 async def health():
     """Render health-check endpoint."""
     return {"status": "healthy"}
+
+
+class CallRequest(BaseModel):
+    phone_number: str
+
+
+@app.post("/call")
+async def start_outbound_call(request: CallRequest):
+    """Ask Twilio to call a visitor and connect them to Voxora."""
+    phone_number = request.phone_number.strip()
+    if not phone_number.startswith("+") or not phone_number[1:].isdigit() or not 8 <= len(phone_number[1:]) <= 15:
+        raise HTTPException(status_code=400, detail="Enter a valid phone number in international format, for example +2348012345678.")
+    if not twilio_client or not TWILIO_PHONE_NUMBER:
+        raise HTTPException(status_code=503, detail="Outbound calling is not configured yet. Add the Twilio environment variables in Render.")
+    try:
+        call = twilio_client.calls.create(
+            to=phone_number,
+            from_=TWILIO_PHONE_NUMBER,
+            url=f"{BASE_URL}/twiml",
+        )
+        return {"status": "queued", "message": "Your phone should ring shortly.", "call_sid": call.sid}
+    except Exception as error:
+        print(f"Twilio call failed: {error}")
+        raise HTTPException(status_code=502, detail="Twilio could not start the call. Check the number and account settings.")
 
 def gemini_response(chat_session, user_prompt):
     """Get a response from the Gemini API."""

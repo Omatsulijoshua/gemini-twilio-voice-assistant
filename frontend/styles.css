@@ -140,6 +140,17 @@ h2 { margin-top: 18px; font-size: clamp(38px, 4.5vw, 62px); line-height: 1.06; f
 .try-panel h2 { font-size: clamp(40px, 4.3vw, 60px); }
 .try-panel p { color: var(--muted); }
 .try-actions { display: flex; flex-direction: column; gap: 22px; min-width: 220px; }
+.call-form { width: min(100%, 420px); margin-top: 30px; }
+.call-form label { display: block; color: #d5d3da; font-size: 13px; margin-bottom: 10px; }
+.call-input-row { display: flex; gap: 8px; }
+.call-form input { min-width: 0; flex: 1; height: 52px; padding: 0 15px; color: white; background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 4px; outline: none; font: inherit; }
+.call-form input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(140,92,255,.14); }
+.call-form .button { flex-shrink: 0; cursor: pointer; }
+.call-form .button:disabled { opacity: .55; cursor: wait; }
+.call-form > small { display: block; min-height: 16px; margin-top: 9px; color: #777681; font-size: 10px; }
+.call-form > small.is-success { color: var(--green); }
+.call-form > small.is-error { color: #ff7b85; }
+.call-form > small.is-loading { color: #a781ff; }
 .service-status { display: flex; gap: 11px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 4px; }
 .service-status > i { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
 .service-status span { display: flex; flex-direction: column; }
@@ -161,6 +172,7 @@ footer .brand { color: white; }
   .steps { grid-template-columns: 1fr; }
   .steps article:not(:last-child) { border-right: 0; border-bottom: 1px solid #cfcdc6; margin-right: 0; padding-bottom: 35px; }
   .try-panel { padding: 55px 40px; flex-direction: column; align-items: flex-start; }
+  .call-form { width: 100%; }
 }
 
 @media (max-width: 560px) {
@@ -178,6 +190,8 @@ footer .brand { color: white; }
   .note-two { right: 4px; }
   .section { padding-block: 82px; }
   .try-panel { padding: 42px 25px; }
+  .call-input-row { flex-direction: column; }
+  .call-form .button { justify-content: space-between; }
   footer { flex-direction: column; justify-content: center; gap: 12px; padding-block: 28px; }
 }
 

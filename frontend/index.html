@@ -138,6 +138,14 @@
             <a class="button primary" href="https://github.com/Omatsulijoshua/gemini-twilio-voice-assistant" target="_blank" rel="noreferrer"><span>View the project</span><b>↗</b></a>
             <div class="service-status"><i></i><span><b>Voice service</b><small id="service-label">Ready to connect</small></span></div>
           </div>
+          <form class="call-form" id="call-form">
+            <label for="phone-number">Enter your number and Voxora will call you</label>
+            <div class="call-input-row">
+              <input id="phone-number" name="phone_number" type="tel" inputmode="tel" autocomplete="tel" placeholder="+234 801 234 5678" required />
+              <button class="button primary" type="submit"><span>Call me</span><b>↗</b></button>
+            </div>
+            <small id="call-status" role="status">Use international format, starting with +.</small>
+          </form>
         </div>
       </section>
     </main>
